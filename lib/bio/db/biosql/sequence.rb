@@ -179,9 +179,12 @@ module Bio
             self.reference=reference
           end unless bs.references.nil?
 
-          bs.comments.each do |comment|
-            self.comment=comment
-          end unless bs.comments.nil?
+          # bs.comments.each do |comment|
+          #   self.comment=comment
+          # end unless bs.comments.nil?
+
+          puts "Debug: comments..start" if $DEBUG
+          self.comment=bs.comments
 
           #DELETE          end #transaction
           return self
@@ -297,7 +300,7 @@ module Bio
         type_term = Term.first(:conditions=>["name = ?", feat.feature]) || Term.create({:name=>feat.feature, :ontology=>Ontology.first(:conditions=>["name = ?",'SeqFeature Keys'])})
         #DELETE        source_term_ontology = Ontology.find_or_create({:name=>'SeqFeature Sources'})
         puts "feature:source_term" if $DEBUG
-        source_term = Term.first(:conditions=>["name = ?",'EMBLGenBankSwit'])
+        source_term = Term.first(:conditions=>["name = ?",'EMBL/GenBank/SwissProt'])
         puts "feature:seqfeature" if $DEBUG
         seqfeature = @entry.seqfeatures.build({:source_term=>source_term, :type_term=>type_term, :rank=>@entry.seqfeatures.count.succ, :display_name=>''})
         seqfeature.save

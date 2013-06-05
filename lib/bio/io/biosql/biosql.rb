@@ -31,7 +31,7 @@ module Bio
     Ontology.first(:conditions => ["name = ?", 'Annotation Tags']) || Ontology.create({:name => 'Annotation Tags'})
     Ontology.first(:conditions => ["name = ?", 'SeqFeature Keys']) || Ontology.create({:name => 'SeqFeature Keys'})
     Ontology.first(:conditions => ["name = ?", 'SeqFeature Sources']) ||Ontology.create({:name => 'SeqFeature Sources'})
-    Term.first(:conditions => ["name = ?", 'EMBLGenBankSwit']) || Term.create({:name => 'EMBLGenBankSwit', :ontology => Ontology.first(:conditions => ["name = ?", 'SeqFeature Sources'])})
+    Term.first(:conditions => ["name = ?", 'EMBL/GenBank/SwissProt']) || Term.create({:name => 'EMBL/GenBank/SwissProt', :ontology => Ontology.first(:conditions => ["name = ?", 'SeqFeature Sources'])})
     connection 
   end #establish_connection
   
