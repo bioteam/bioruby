@@ -27,7 +27,7 @@ module Bio
       attr_accessible :value, :rank, :bioentry, :term
       set_primary_keys :bioentry_id, :term_id, :rank
       belongs_to :bioentry, :class_name => "Bioentry"
-      belongs_to :term, :class_name => "Term"
+      belongs_to :term, :class_name => "Term", :dependent => :destroy
     end #BioentryQualifierValue
   
     class Bioentry < DummyBase
@@ -64,7 +64,7 @@ module Bio
       attr_accessible :start_pos, :end_pos, :rank, :bioentry, :reference
       set_primary_keys :bioentry_id, :reference_id, :rank
       belongs_to :bioentry, :class_name => "Bioentry"
-      belongs_to :reference , :class_name => "Reference"
+      belongs_to :reference , :class_name => "Reference", :dependent => :destroy
     end
     class BioentryRelationship < DummyBase
       attr_accessible :rank, :term, :subject_bioentry, :object_bioentry
