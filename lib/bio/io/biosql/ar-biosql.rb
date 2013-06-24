@@ -27,7 +27,7 @@ module Bio
       attr_accessible :value, :rank, :bioentry, :term
       set_primary_keys :bioentry_id, :term_id, :rank
       belongs_to :bioentry, :class_name => "Bioentry"
-      belongs_to :term, :class_name => "Term", :dependent => :destroy
+      belongs_to :term, :class_name => "Term"
     end #BioentryQualifierValue
   
     class Bioentry < DummyBase
@@ -39,7 +39,7 @@ module Bio
       has_many :comments, :class_name =>"Comment", :order =>'rank', :dependent => :destroy
       has_many :seqfeatures, :class_name => "Seqfeature", :order=>'rank', :dependent => :destroy
 # no delete
-      has_many :bioentry_references, :class_name=>"BioentryReference" #, :foreign_key => "bioentry_id"
+      has_many :bioentry_references, :class_name=>"BioentryReference", :dependent => :destroy #, :foreign_key => "bioentry_id"
       has_many :bioentry_dbxrefs, :class_name => "BioentryDbxref", :dependent => :destroy
       has_many :object_bioentry_relationships, :class_name=>"BioentryRelationship", :foreign_key=>"object_bioentry_id", :dependent => :destroy #non mi convince molto credo non funzioni nel modo corretto
       has_many :subject_bioentry_relationships, :class_name=>"BioentryRelationship", :foreign_key=>"subject_bioentry_id", :dependent => :destroy #non mi convince molto credo non funzioni nel modo corretto
@@ -49,7 +49,7 @@ module Bio
       has_many :cdsfeatures, :class_name=>"Seqfeature", :foreign_key =>"bioentry_id", :conditions=>["term.name='CDS'"], :include=>"type_term"
       has_many :references, :through=>:bioentry_references, :class_name => "Reference", :dependent => :destroy
 # no delete
-      has_many :terms, :through=>:bioentry_qualifier_values, :class_name => "Term"
+      has_many :terms, :through=>:bioentry_qualifier_values, :class_name => "Term", :dependent => :destroy
       #NOTE: added order_by for multiple hit and manage ranks correctly
       has_many :bioentry_qualifier_values, :order=>"bioentry_id,term_id,rank", :class_name => "BioentryQualifierValue", :dependent => :destroy
         
@@ -64,7 +64,7 @@ module Bio
       attr_accessible :start_pos, :end_pos, :rank, :bioentry, :reference
       set_primary_keys :bioentry_id, :reference_id, :rank
       belongs_to :bioentry, :class_name => "Bioentry"
-      belongs_to :reference , :class_name => "Reference", :dependent => :destroy
+      belongs_to :reference , :class_name => "Reference"
     end
     class BioentryRelationship < DummyBase
       attr_accessible :rank, :term, :subject_bioentry, :object_bioentry
