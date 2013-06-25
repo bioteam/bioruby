@@ -25,7 +25,7 @@ module Bio
       attr_accessible :value, :rank, :bioentry, :term
       self.primary_keys = :bioentry_id, :term_id, :rank
       belongs_to :bioentry, :class_name => "Bioentry"
-      belongs_to :term, :class_name => "Term"
+      belongs_to :term, :class_name => "Term", :dependent => :destroy
     end
   
     class Bioentry < DummyBase
@@ -42,10 +42,10 @@ module Bio
       has_many :subject_bioentry_paths, :class_name=>"BioentryPath", :foreign_key=>"subject_bioentry_id", :dependent => :destroy #non mi convince molto credo non funzioni nel modo corretto
       has_many :cdsfeatures, :class_name=>"Seqfeature", :foreign_key =>"bioentry_id", :conditions=>["term.name='CDS'"], :include=>"type_term"
 # no delete
-      has_many :bioentry_references, :class_name=>"BioentryReference", :dependent => :destroy
+      has_many :bioentry_references, :class_name=>"BioentryReference"
       has_many :references, :through=>:bioentry_references, :class_name => "Reference", :dependent => :destroy
 # no delete
-      has_many :bioentry_qualifier_values, :order=>"bioentry_id,term_id,rank", :class_name => "BioentryQualifierValue", :dependent => :destroy
+      has_many :bioentry_qualifier_values, :order=>"bioentry_id,term_id,rank", :class_name => "BioentryQualifierValue"
       has_many :terms, :through=>:bioentry_qualifier_values, :class_name => "Term", :dependent => :destroy
     end
 
@@ -53,7 +53,7 @@ module Bio
       attr_accessible :start_pos, :end_pos, :rank, :bioentry, :reference
       self.primary_keys = :bioentry_id, :reference_id, :rank
       belongs_to :bioentry, :class_name => "Bioentry"
-      belongs_to :reference , :class_name => "Reference"
+      belongs_to :reference , :class_name => "Reference", :dependent => :destroy
     end
 
     class BioentryRelationship < DummyBase
