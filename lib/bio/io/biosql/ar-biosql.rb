@@ -159,7 +159,7 @@ module Bio
       attr_accessible :rank, :value, :term, :seqfeature
       self.primary_keys =  :seqfeature_id, :term_id, :rank
       set_sequence_name nil
-      belongs_to :seqfeature
+      belongs_to :seqfeature, :class_name => "Seqfeature"
       belongs_to :term, :class_name => "Term"
     end		
 
@@ -236,7 +236,7 @@ module Bio
       belongs_to :ontology, :class_name => "Ontology"
       has_many :seqfeature_qualifier_values, :class_name => "SeqfeatureQualifierValue", :dependent => :destroy
       has_many :dbxref_qualifier_values, :class_name => "DbxrefQualifierValue", :dependent => :destroy
-      has_many :bioentry_qualifer_values, :class_name => "BioentryQualifierValue", :dependent => :destroy
+      has_many :bioentry_qualifer_values, :class_name => "BioentryQualifierValue"
 # no delete
       has_many :bioentries, :through=>:bioentry_qualifier_values, :dependent => :destroy
       has_many :locations, :class_name => "Location", :dependent => :destroy
