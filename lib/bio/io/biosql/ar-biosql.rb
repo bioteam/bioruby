@@ -238,7 +238,7 @@ module Bio
       has_many :dbxref_qualifier_values, :class_name => "DbxrefQualifierValue", :dependent => :destroy
       has_many :bioentry_qualifer_values, :class_name => "BioentryQualifierValue"
 # no delete
-      has_many :bioentries, :through=>:bioentry_qualifier_values, :dependent => :destroy
+      has_many :bioentries, :class_name => "Bioentry", :through=>:bioentry_qualifier_values
       has_many :locations, :class_name => "Location", :dependent => :destroy
       has_many :seqfeature_relationships, :class_name => "SeqfeatureRelationship", :dependent => :destroy
       has_many :term_dbxrefs, :class_name => "TermDbxref", :dependent => :destroy
