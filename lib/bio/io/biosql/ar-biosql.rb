@@ -8,7 +8,7 @@ module Bio
 
     class BioentryDbxref < DummyBase
       self.primary_key = nil
-      attr_accessible :bioentry, :dbxref
+      attr_accessible :bioentry, :dbxref, :rank
       belongs_to :bioentry, :class_name => "Bioentry"
       belongs_to :dbxref, :class_name => "Dbxref"
     end
